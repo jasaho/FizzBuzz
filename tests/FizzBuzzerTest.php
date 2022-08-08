@@ -1,29 +1,33 @@
 <?php
 declare(strict_types=1);
 
-use FizzBuzz\Rules\BuzzRule;
-use FizzBuzz\Rules\FizzBuzzRule;
-use FizzBuzz\Rules\FizzRule;
+use FizzBuzz\Rules\RuleInterface;
 use PHPUnit\Framework\TestCase;
 
 class FizzBuzzerTest extends TestCase
 {
     /** @dataProvider RulesProvider */
-    public function testRules(int $number, $rule, $expectedResult): void
+    public function testRules($number, $match, $expected): void
     {
+        $rule = $this->createMock(RuleInterface::class);
+        $rule->method('matchNumber')
+            ->with($number)
+            ->willReturn($match);
+        $rule->method('replaceNumber')
+            ->willReturn('dummy');
+
         $rules = [$rule];
 
         $fizzBuzzer = new FizzBuzz\FizzBuzzer($rules);
         $output = $fizzBuzzer->generateOutput($number,$number);
-        $this->assertSame($expectedResult, $output[0]);
+        $this->assertSame($expected, $output[0]);
     }
 
     public function RulesProvider(): array
     {
         return [
-            'divisible by 3' => [3, new FizzRule(),'Fizz'],
-            'divisible by 5' => [5, new BuzzRule(),'Buzz'],
-            'divisible by 15' => [15, new FizzBuzzRule(),'FizzBuzz']
+            'divisible' => [3, true, 'dummy'],
+            'not divisible' => [10, false, 10]
         ];
     }
 

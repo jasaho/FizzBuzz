@@ -5,6 +5,8 @@ namespace FizzBuzz\Rules;
 
 class FizzRule implements RuleInterface
 {
+    private const REPLACEMENT = 'Fizz';
+
     public function matchNumber(int $number): bool
     {
         return $number % 3 === 0;
@@ -12,6 +14,6 @@ class FizzRule implements RuleInterface
 
     public function replaceNumber(): string
     {
-        return 'Fizz';
+        return self::REPLACEMENT;
     }
 }
