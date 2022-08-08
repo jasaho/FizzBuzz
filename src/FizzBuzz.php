@@ -5,18 +5,18 @@ use FizzBuzz\FizzBuzzer;
 use FizzBuzz\Rules\BuzzRule;
 use FizzBuzz\Rules\FizzBuzzRule;
 use FizzBuzz\Rules\FizzRule;
+use FizzBuzz\Rules\RuleSet;
 
 require '../vendor/autoload.php';
 
 $time_start = microtime(true);
 
-$rules = [
-    new FizzBuzzRule(),
-    new FizzRule(),
-    new BuzzRule()
-];
+$ruleSet = new RuleSet();
+$ruleSet->add(new FizzBuzzRule())
+        ->add(new FizzRule())
+        ->add(new BuzzRule());
 
-$fizzBuzzer = new FizzBuzzer($rules);
+$fizzBuzzer = new FizzBuzzer($ruleSet);
 
 echo implode (PHP_EOL,$fizzBuzzer->generateOutput(1,100));
 

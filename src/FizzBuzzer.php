@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace FizzBuzz;
 
 use FizzBuzz\Rules\RuleInterface;
+use FizzBuzz\Rules\RuleSetInterface;
 
 class FizzBuzzer
 {
@@ -11,11 +12,11 @@ class FizzBuzzer
     private $rules = [];
 
     /**
-     * @param RuleInterface[] $rules
+     * @param RuleSetInterface $ruleSet
      */
-    public function __construct(array $rules)
+    public function __construct(RuleSetInterface $ruleSet)
     {
-        $this->rules = $rules;
+        $this->rules = $ruleSet->toArray();
     }
 
     /**
